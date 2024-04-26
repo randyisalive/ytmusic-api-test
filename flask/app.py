@@ -31,6 +31,15 @@ def get_library_playlists():
     return jsonify(playlists)
 
 
+@app.route("/api/get_search_suggestions", methods=["POST", "GET"])
+def get_search():
+    yt = YTMusic("oauth.json")
+    data = request.get_json()
+    browseId = data.get("browseId")
+    suggestions = yt.get_song_related(browseId=browseId)
+    return jsonify(suggestions)
+
+
 @app.route("/api/get_playlist", methods=["POST", "GET"])
 def get_playlist_by_id():
     yt = YTMusic("oauth.json")
@@ -59,8 +68,8 @@ def download():
         url = request.get_json().get("url")
         try:
             yt = YouTube(url)
-            stream = yt.streams.get_audio_only()
-            filename = yt.title + ".mp3"
+            stream = yt.streams.get_highest_resolution()
+            filename = yt.title + ".mp4"
             stream.download(output_path="downloads", filename=filename)
             return send_file(f"downloads/{filename}", as_attachment=True)
         except Exception as e:

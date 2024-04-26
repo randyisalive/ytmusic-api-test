@@ -2,6 +2,7 @@ import React from "react";
 import useLibraryData from "../function/useLibraryData";
 import Loading from "./Loading";
 import { Toast } from "primereact/toast";
+import LibraryList from "../components/LibraryList";
 
 function Library() {
   const { playlistData, isLoading, download_song, toast, toastDownload } =
@@ -58,42 +59,10 @@ function Library() {
         </div>
       </div>
       <div id="song-bar" className="d-flex mt-5 flex-column w-100">
-        {playlistData.tracks.map((item) => {
-          return (
-            <>
-              <div
-                className="w-100 d-flex border-top"
-                style={{ justifyContent: "space-between" }}
-              >
-                <div className="d-flex gap-2 align-items-center w-100 p-2">
-                  <img
-                    src={item.thumbnails[0].url}
-                    alt="song-thumbnail"
-                    width={80}
-                  />
-                  <span>{item.title}</span>
-                </div>
-                <div className="d-flex align-items-center w-50 gap-2">
-                  <span className="text-secondary">{item.artists[0].name}</span>
-                </div>
-
-                <div className="d-flex gap-3 align-items-center">
-                  <span> {item.duration}</span>
-                  <button
-                    className="btn btn-success"
-                    onClick={() => {
-                      download_song(
-                        `https://music.youtube.com/watch?v=${item.videoId}&list=${playlistData.id}`
-                      );
-                    }}
-                  >
-                    Download
-                  </button>
-                </div>
-              </div>
-            </>
-          );
-        })}
+        <LibraryList
+          download_song={download_song}
+          playlistData={playlistData}
+        />
       </div>
     </div>
   );
