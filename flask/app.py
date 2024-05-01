@@ -68,8 +68,8 @@ def download():
         url = request.get_json().get("url")
         try:
             yt = YouTube(url)
-            stream = yt.streams.get_highest_resolution()
-            filename = yt.title + ".mp4"
+            stream = yt.streams.get_audio_only()
+            filename = yt.title + ".mp3"
             stream.download(output_path="downloads", filename=filename)
             return send_file(f"downloads/{filename}", as_attachment=True)
         except Exception as e:
@@ -78,4 +78,4 @@ def download():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")

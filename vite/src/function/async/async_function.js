@@ -1,3 +1,6 @@
+const url_local = "http://127.0.0.1:5000";
+const other = "";
+
 export async function logSearch(search) {
   try {
     const response = await fetch("http://127.0.0.1:5000/search", {
