@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
 from ytmusicapi import YTMusic
 from pytube import YouTube
+from controller.SystemController import SystemController
 
 
 app = Flask(__name__)
@@ -76,6 +77,8 @@ def download():
             return f"Error: {str(e)}"
     return jsonify("index.html")  # Create an HTML template for the form
 
+
+app.register_blueprint(SystemController)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

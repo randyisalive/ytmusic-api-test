@@ -3,6 +3,7 @@ import useLibraryData from "../function/useLibraryData";
 import Loading from "./Loading";
 import { Toast } from "primereact/toast";
 import LibraryList from "../components/LibraryList";
+import { open_folder } from "../function/async/async_function";
 
 function Library() {
   const { playlistData, isLoading, download_song, toast, toastDownload } =
@@ -43,7 +44,7 @@ function Library() {
               <span>{playlistData.trackCount} Tracks</span>
               <span>{playlistData.duration}</span>
             </div>
-            <div className="d-flex">
+            <div className="d-flex gap-2">
               <button
                 className="btn btn-danger"
                 onClick={() => {
@@ -53,6 +54,16 @@ function Library() {
                 }}
               >
                 Download All Songs
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  open_folder().then((data) => {
+                    console.log(data);
+                  });
+                }}
+              >
+                Open Download Folder
               </button>
             </div>
           </div>

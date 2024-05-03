@@ -1,9 +1,6 @@
-const url_local = "http://127.0.0.1:5000";
-const other = "";
-
 export async function logSearch(search) {
   try {
-    const response = await fetch("http://127.0.0.1:5000/search", {
+    const response = await fetch(url_custom + "/search", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,19 +14,9 @@ export async function logSearch(search) {
   }
 }
 
-export async function getAllPlaylist() {
-  try {
-    const response = await fetch("http://127.0.0.1:5000/api/get_user_playlist");
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    console.error(e);
-  }
-}
-
 export async function getPlaylist(id) {
   try {
-    const response = await fetch("http://127.0.0.1:5000/api/get_playlist", {
+    const response = await fetch(url_custom + "/api/get_playlist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +32,7 @@ export async function getPlaylist(id) {
 
 export async function getUser(channelId) {
   try {
-    const response = await fetch("http://127.0.0.1:5000/api/user", {
+    const response = await fetch(url_custom + "/api/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +48,7 @@ export async function getUser(channelId) {
 
 export async function downloadSong(url) {
   try {
-    const response = await fetch("http://127.0.0.1:5000/api/download", {
+    const response = await fetch(url_custom + "/api/download", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,6 +57,16 @@ export async function downloadSong(url) {
     });
     const data = await response.json();
 
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function open_folder() {
+  try {
+    const response = await fetch(url_custom + "/api/open_folder");
+    const data = await response.json();
     return data;
   } catch (e) {
     console.error(e);

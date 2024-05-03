@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { getAllPlaylist, getPlaylist, logSearch } from "./async/async_function";
-import { useParams } from "react-router-dom";
+import async_Home from "./async/async_Home";
 
 function useYoutubeData() {
-  const { playlist_id } = useParams();
-  const [searchData, setSearchData] = useState([]);
+  const { getAllPlaylist } = async_Home();
+
   const [isLoading, setIsLoading] = useState(true);
   const [playlist, setPlaylist] = useState([]);
 
@@ -15,7 +14,7 @@ function useYoutubeData() {
     });
   }, []);
 
-  return { searchData, playlist, isLoading };
+  return { playlist, isLoading };
 }
 
 export default useYoutubeData;
