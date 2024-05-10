@@ -1,0 +1,49 @@
+.outer-container {
+    background: -webkit-linear-gradient(
+        45deg,
+        hsl(1deg 68.3% 38.92%) 0%,
+        hsla(328, 100%, 24%, 1) 100%
+      );
+}
+
+.navbar-container {
+    background: -webkit-linear-gradient(
+        45deg,
+        hsl(1deg 68.3% 38.92%) 0%,
+        hsla(328, 100%, 24%, 1) 100%
+      );
+      color: #333333!important;
+
+
+}
+
+.navbar-container-text {
+    font-size: 18px;
+      color: #333333!important;
+
+
+}
+
+.outer-content-container {
+    overflow: auto;
+    height: 100vh;
+    border-color:black!important;
+ 
+
+}
+
+
+
+/* For elements */
+::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: none;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(1deg 68.3% 38.92%) 0%;    /* scrollbar color */
+    border: 13px solid #e28181;  /* scrollbar background */
+  }

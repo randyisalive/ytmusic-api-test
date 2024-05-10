@@ -1,3 +1,7 @@
+import global_const from "../global_const";
+
+const { url_custom } = global_const();
+
 export async function logSearch(search) {
   try {
     const response = await fetch(url_custom + "/search", {

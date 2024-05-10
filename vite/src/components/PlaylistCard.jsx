@@ -1,22 +1,21 @@
-function PlaylistCard({ img, playlist_name, total_tracks }) {
+import { Image } from "primereact/image";
+import { Link } from "react-router-dom";
+
+function PlaylistCard({ item }) {
   return (
     <>
-      <div
-        className="d-flex flex-column gap-1"
-        style={{ width: "fit-content", maxHeight: "200px" }}
-      >
-        <img src={img} alt="album-thumbnail" width={120} />
-        <div className="d-flex bg-danger" style={{ height: "fit-content" }}>
-          <div className="d-flex">
-            <p className="m-0" style={{ width: "120px", height: "120px" }}>
-              {playlist_name}
-            </p>
-          </div>
-          <div className="d-flex" style={{ wordWrap: "break-word" }}>
-            {total_tracks}
+      <Link className=" library-card" to={`/browse/${item.playlistId}`}>
+        <div
+          className="w-100 d-flex"
+          style={{ justifyContent: "space-between" }}
+        >
+          <div className="d-flex gap-4 align-items-center w-100 p-2">
+            <Image src={item.thumbnails[1].url} width="80" preview />
+
+            <span>{item.title}</span>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 }
