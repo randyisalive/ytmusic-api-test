@@ -3,6 +3,8 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Library from "./pages/Library";
 
+import "primeicons/primeicons.css";
+
 function App() {
   const channelId = "UCm1Ta_ebXboWHcZBBvXYmwg";
 

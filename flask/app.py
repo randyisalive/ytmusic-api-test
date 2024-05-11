@@ -3,8 +3,11 @@ from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
 from ytmusicapi import YTMusic
 from pytube import YouTube
+import os
+
 from controller.SystemController import SystemController
 
+from services.MoviepyServices import ConvertToMp3
 
 app = Flask(__name__)
 CORS(app)
@@ -69,12 +72,13 @@ def download():
         url = request.get_json().get("url")
         try:
             yt = YouTube(url)
-            stream = yt.streams.get_audio_only()
-            filename = yt.title + ".mp3"
+            stream = yt.streams.get_lowest_resolution()
+            filename = yt.title + ".mp4"
             stream.download(output_path="downloads", filename=filename)
-            return send_file(f"downloads/{filename}", as_attachment=True)
+            ConvertToMp3(yt, file_remove=True)
+            return jsonify({"message": True})
         except Exception as e:
-            return f"Error: {str(e)}"
+            return jsonify({"message": False})
     return jsonify("index.html")  # Create an HTML template for the form
 
 

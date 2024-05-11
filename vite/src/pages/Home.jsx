@@ -9,7 +9,12 @@ function Home() {
   return (
     <>
       <div className="d-flex">
-        <h3 className="m-0 text-white">Library</h3>
+        <span
+          className="m-0 text-white display-6"
+          style={{ fontWeight: "bold" }}
+        >
+          Library
+        </span>
       </div>
       {isLoading ? <Loading /> : null}
       <div

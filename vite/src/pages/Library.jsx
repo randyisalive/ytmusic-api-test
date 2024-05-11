@@ -1,9 +1,10 @@
-import React from "react";
 import useLibraryData from "../function/useLibraryData";
 import Loading from "./Loading";
 import { Toast } from "primereact/toast";
 import LibraryList from "../components/LibraryList";
 import { open_folder } from "../function/async/async_function";
+
+import "./library.css";
 
 function Library() {
   const { playlistData, isLoading, download_song, toast, toastDownload } =
@@ -17,10 +18,10 @@ function Library() {
     );
   }
   return (
-    <div className="container">
+    <div className="container text-white">
       <Toast ref={toast} />
       <Toast ref={toastDownload} />
-      <div className="d-flex gap-3">
+      <div className="d-flex gap-3" id="title-library-container">
         <img
           src={playlistData.thumbnails[1].url}
           width={300}
@@ -45,16 +46,6 @@ function Library() {
               <span>{playlistData.duration}</span>
             </div>
             <div className="d-flex gap-2">
-              <button
-                className="btn btn-danger"
-                onClick={() => {
-                  download_song(
-                    `https://music.youtube.com/playlist?list=${playlistData.id}`
-                  );
-                }}
-              >
-                Download All Songs
-              </button>
               <button
                 className="btn btn-primary"
                 onClick={() => {

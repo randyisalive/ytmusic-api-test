@@ -60,7 +60,6 @@ export async function downloadSong(url) {
       body: JSON.stringify({ url }),
     });
     const data = await response.json();
-
     return data;
   } catch (e) {
     console.error(e);

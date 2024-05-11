@@ -11,11 +11,15 @@ function useLibraryData() {
   const toastDownload = useRef(null);
 
   const show = () => {
-    toast.current.show({
+    toastDownload.current.show({
       severity: "success",
       summary: "Info",
-      detail: "Song Downloaded",
+      detail: "Song Downloaded!!",
     });
+  };
+
+  const toastOff = (key) => {
+    toast.current.clear(key);
   };
 
   const showDownload = () => {
@@ -23,6 +27,8 @@ function useLibraryData() {
       severity: "primary",
       summary: "Info",
       detail: "Downloading...",
+      key: "downloadToast",
+      life: "999999999",
     });
   };
 
@@ -38,7 +44,9 @@ function useLibraryData() {
   function download_song(url) {
     showDownload();
     downloadSong(url).then((data) => {
-      if (data === undefined) {
+      console.log(data);
+      if (data.message === true) {
+        toastOff("downloadToast");
         show();
       }
     });
