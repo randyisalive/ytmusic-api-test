@@ -1,5 +1,5 @@
 import { Image } from "primereact/image";
-import "./library-list.css";
+import "./css/library-list.css";
 import { Link } from "react-router-dom";
 
 function LibraryList({ download_song, playlistData }) {
@@ -8,9 +8,7 @@ function LibraryList({ download_song, playlistData }) {
       {playlistData.tracks.map((item) => {
         return (
           <>
-            <Link
-              to={`https://music.youtube.com/watch?v=${item.videoId}&list=${playlistData.id}`}
-            >
+            <Link to={`/download/${item.title}.mp3`}>
               <div
                 className="w-100 d-flex hover-card p-3 text-white"
                 style={{ justifyContent: "space-between" }}

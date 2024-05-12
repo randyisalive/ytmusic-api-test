@@ -1,6 +1,6 @@
 .hover-card {
     margin-bottom: 1rem;
-    transition: background-color 0.2s ease; /* Transition effect */    
+    transition: background-color 0.155s ease; /* Transition effect */    
 }
 
 .hover-card:hover {

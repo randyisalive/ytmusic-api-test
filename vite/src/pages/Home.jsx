@@ -1,7 +1,8 @@
 import useYoutubeData from "../function/useYoutubeData";
 import Loading from "./Loading";
-import "./home.css";
+import "./css/home.css";
 import PlaylistCard from "../components/PlaylistCard";
+import LabelDisplay from "../components/LabelDisplay";
 
 function Home() {
   const { playlist, isLoading } = useYoutubeData();
@@ -9,12 +10,7 @@ function Home() {
   return (
     <>
       <div className="d-flex">
-        <span
-          className="m-0 text-white display-6"
-          style={{ fontWeight: "bold" }}
-        >
-          Library
-        </span>
+        <LabelDisplay label={`Library`} />
       </div>
       {isLoading ? <Loading /> : null}
       <div

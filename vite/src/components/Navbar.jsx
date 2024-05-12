@@ -1,5 +1,5 @@
 import useUserData from "../function/useUserData";
-import "./navbar.css";
+import "./css/navbar.css";
 import NavbarItem from "./NavbarItem";
 
 function Navbar({ channelId, children }) {
