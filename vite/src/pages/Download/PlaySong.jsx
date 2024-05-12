@@ -20,6 +20,12 @@ function PlaySong() {
     document.title = `${song_title.replace(".mp3", "")} - YT Music Downloader`;
   }, [song_title]);
 
+  console.log(audioSrc);
+
+  if (audioSrc === undefined) {
+    return <></>;
+  }
+
   return (
     <>
       <div

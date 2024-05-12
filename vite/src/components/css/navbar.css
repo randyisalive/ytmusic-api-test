@@ -15,6 +15,7 @@
         hsla(328, 100%, 24%, 1) 100%
       );
       color: #333333!important;
+      width: fit-content;
 
 
 }

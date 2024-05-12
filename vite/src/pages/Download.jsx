@@ -22,7 +22,11 @@ function Download() {
             return (
               <>
                 <Link to={item.song_title}>
-                  <PlaylistCard item={item} download_page={true} />
+                  <PlaylistCard
+                    item={item}
+                    download_page={true}
+                    delete_download={delete_download}
+                  />
                 </Link>
               </>
             );

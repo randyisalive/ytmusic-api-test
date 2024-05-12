@@ -21,7 +21,7 @@ DebugToolbarExtension(app)
 
 @app.route("/api/search", methods=["POST", "GET"])
 def search_music():
-    yt = YTMusic("oauth.json")  # Replace with your authentication details
+    yt = YTMusic("oauth/oauth.json")  # Replace with your authentication details
     if request.method == "POST":
         data = request.get_json()
         search = data.get("search")
@@ -32,14 +32,14 @@ def search_music():
 
 @app.route("/api/get_user_playlist", methods=["POST", "GET"])
 def get_library_playlists():
-    yt = YTMusic("oauth.json")
+    yt = YTMusic("oauth/oauth.json")
     playlists = yt.get_library_playlists(limit=25)
     return jsonify(playlists)
 
 
 @app.route("/api/get_search_suggestions", methods=["POST", "GET"])
 def get_search():
-    yt = YTMusic("oauth.json")
+    yt = YTMusic("oauth/oauth.json")
     data = request.get_json()
     browseId = data.get("browseId")
     suggestions = yt.get_song_related(browseId=browseId)
@@ -48,7 +48,7 @@ def get_search():
 
 @app.route("/api/get_playlist", methods=["POST", "GET"])
 def get_playlist_by_id():
-    yt = YTMusic("oauth.json")
+    yt = YTMusic("oauth/oauth.json")
     if request.method == "POST":
         data = request.get_json()
         id = data.get("id")
@@ -59,7 +59,7 @@ def get_playlist_by_id():
 
 @app.route("/api/user", methods=["POST", "GET"])
 def get_user():
-    yt = YTMusic("oauth.json")
+    yt = YTMusic("oauth/oauth.json")
     if request.method == "POST":
         data = request.get_json()
         channelId = data.get("channelId")
