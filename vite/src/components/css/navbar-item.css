@@ -1,14 +1,26 @@
-.library-card {
+.navbar-card {
     justify-content: space-between;
     box-shadow: 0 4px 30px rgb(0 0 0 / 12%);
     backdrop-filter: blur(25px);
     padding: 12px;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.09);
-    color: white;
     border: 1px solid rgb(255 255 255 / 7%);
 }
 
-body {
-    overflow: hidden;
+.navbar-container-text {
+    font-size: 18px;
+    color: white;
+    transition: color 0.155s ease;
+
+
+}
+
+.navbar-container-text:hover {
+    color: rgb(192, 185, 185)!important;
+
+}
+
+#icon-item {
+    width: 2.5rem;
 }

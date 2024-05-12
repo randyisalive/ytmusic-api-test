@@ -3,9 +3,11 @@ from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
 from ytmusicapi import YTMusic
 from pytube import YouTube
+from services.DownloadService import InsertDownload, CheckDownload
 import os
 
 from controller.SystemController import SystemController
+from controller.DownloadController import DownloadController
 
 from services.MoviepyServices import ConvertToMp3
 
@@ -76,13 +78,16 @@ def download():
             filename = yt.title + ".mp4"
             stream.download(output_path="downloads", filename=filename)
             ConvertToMp3(yt, file_remove=True)
-            return jsonify({"message": True})
+            if CheckDownload:
+                InsertDownload(f"{yt.title}.mp3")
+            return jsonify({"message": True, "song_title": yt.title})
         except Exception as e:
             return jsonify({"message": False})
     return jsonify("index.html")  # Create an HTML template for the form
 
 
 app.register_blueprint(SystemController)
+app.register_blueprint(DownloadController)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

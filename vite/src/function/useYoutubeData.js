@@ -12,6 +12,7 @@ function useYoutubeData() {
       setPlaylist(data);
       setIsLoading(false);
     });
+    document.title = "YT Music Downloader - Home";
   }, []);
 
   return { playlist, isLoading };

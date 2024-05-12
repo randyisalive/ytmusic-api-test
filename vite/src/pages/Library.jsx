@@ -4,11 +4,18 @@ import { Toast } from "primereact/toast";
 import LibraryList from "../components/LibraryList";
 import { open_folder } from "../function/async/async_function";
 
-import "./library.css";
+import "./css/library.css";
+import { useEffect } from "react";
 
 function Library() {
   const { playlistData, isLoading, download_song, toast, toastDownload } =
     useLibraryData();
+
+  useEffect(() => {
+    if (playlistData && playlistData.title) {
+      document.title = `${playlistData.title} - YT Music Downloader`;
+    }
+  }, [playlistData]);
 
   if (isLoading) {
     return (
@@ -17,6 +24,7 @@ function Library() {
       </>
     );
   }
+
   return (
     <div className="container text-white">
       <Toast ref={toast} />

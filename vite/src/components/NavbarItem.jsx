@@ -1,7 +1,18 @@
 import { Link } from "react-router-dom";
-import "./navbar-item.css";
+import "./css/navbar-item.css";
 
 function NavbarItem() {
+  const navbarItem = [
+    { id: 1, icon: "book", link: "/", label: "Library" },
+    { id: 2, icon: "search", link: "/search", label: "Search" },
+    { id: 3, icon: "download", link: "/download", label: "Download" },
+    {
+      id: 4,
+      icon: "youtube",
+      link: "https://music.youtube.com/",
+      label: "Youtube Music",
+    },
+  ];
   return (
     <>
       <div
@@ -19,22 +30,20 @@ function NavbarItem() {
               YT Music Downloader
             </label>
           </div>
-          <Link className="navbar-container-text" to={`/`}>
-            <div className="d-flex ">
-              <div className="d-flex align-items-center" id="icon-item">
-                <i className="pi pi-home h5 m-0"></i>
-              </div>
-              <div className="d-flex h5 m-0">Home</div>
-            </div>
-          </Link>
-          <Link className="navbar-container-text">
-            <div className="d-flex">
-              <div className="d-flex align-items-center" id="icon-item">
-                <i className="pi pi-search h5 m-0"></i>
-              </div>
-              <div className="d-flex h5 m-0">Search</div>
-            </div>
-          </Link>
+          {navbarItem.map((item) => {
+            return (
+              <>
+                <Link className="navbar-container-text" to={`${item.link}`}>
+                  <div className="d-flex ">
+                    <div className="d-flex align-items-center" id="icon-item">
+                      <i className={`pi pi-${item.icon} h5 m-0`}></i>
+                    </div>
+                    <div className="d-flex h5 m-0">{`${item.label}`}</div>
+                  </div>
+                </Link>
+              </>
+            );
+          })}
         </div>
       </div>
     </>
