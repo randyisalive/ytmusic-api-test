@@ -15,17 +15,16 @@ function PlaylistCard({ item, download_page = false, delete_download }) {
               <span>{item.song_title.replace(".mp3", "")}</span>
             </div>
             <div className="d-block">
-              <Link to={`/download`}>
-                <button
-                  className="btn btn-danger"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    delete_download(item.song_title);
-                  }}
-                >
-                  Delete
-                </button>
-              </Link>
+              <button
+                className="btn btn-danger"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  delete_download(item.song_title);
+                }}
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>

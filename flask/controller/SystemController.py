@@ -18,5 +18,7 @@ def get_audio():
     song_title = data.get("song_title")
     current_dir = os.getcwd()
     audio_path = f"{current_dir}/downloads/{song_title}"
-    print("audio path: ", audio_path)
-    return send_file(audio_path, mimetype="audio/mp3")
+    if os.path.exists(audio_path):
+        print("audio path: ", audio_path)
+        return send_file(audio_path, mimetype="audio/mp3")
+    return jsonify({"message": False})

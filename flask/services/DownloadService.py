@@ -15,7 +15,6 @@ def GetDownload():
         return songs_list
     except Exception as e:
         print(e)
-    pass
 
 
 def CheckDownload(song_title):

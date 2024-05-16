@@ -3,9 +3,6 @@ import "./css/navbar.css";
 import NavbarItem from "./NavbarItem";
 
 function Navbar({ channelId, children }) {
-  const { user } = useUserData(channelId);
-  console.log(user);
-
   return (
     <>
       <div className="outer-container d-flex">
