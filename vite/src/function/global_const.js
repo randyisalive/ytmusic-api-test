@@ -1,6 +1,8 @@
 function global_const() {
-  const url_local = "http://172.17.20.68:5000";
-  const url_custom = "http://172.17.20.68:5000";
+  const url_local =
+    "https://backendytmusic-randyisalive-randyisalives-projects.vercel.app";
+  const url_custom =
+    "https://backendytmusic-randyisalive-randyisalives-projects.vercel.app";
 
   return { url_custom, url_local };
 }
