@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify, send_file
 from flask_cors import CORS
-from flask_debugtoolbar import DebugToolbarExtension
 from ytmusicapi import YTMusic
 from pytube import YouTube
 from services.DownloadService import InsertDownload, CheckDownload
@@ -16,7 +15,6 @@ CORS(app)
 
 app.secret_key = "1"
 app.debug = True
-DebugToolbarExtension(app)
 
 
 @app.route("/api/search", methods=["POST", "GET"])
