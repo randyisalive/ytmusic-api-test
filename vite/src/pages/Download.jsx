@@ -4,7 +4,8 @@ import { Link, Outlet } from "react-router-dom";
 import useDownloadData from "../function/useDownloadData";
 
 function Download() {
-  const { isLoading, downloadData, delete_download } = useDownloadData();
+  const { isLoading, downloadData, delete_download, handleAudio } =
+    useDownloadData();
   return (
     <>
       <Link
@@ -21,13 +22,13 @@ function Download() {
           {downloadData.map((item) => {
             return (
               <>
-                <Link to={item.song_title}>
-                  <PlaylistCard
-                    item={item}
-                    download_page={true}
-                    delete_download={delete_download}
-                  />
-                </Link>
+                <PlaylistCard
+                  key={item.song_title}
+                  item={item}
+                  download_page={true}
+                  handleAudio={handleAudio}
+                  delete_download={delete_download}
+                />
               </>
             );
           })}

@@ -4,7 +4,7 @@ import { downloadSong, getPlaylist } from "./async/async_function";
 
 function useLibraryData() {
   const { playlist_id } = useParams();
-  const [playlistData, setPlaylistData] = useState({});
+  const [playlistData, setPlaylistData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const toast = useRef(null);
@@ -35,11 +35,20 @@ function useLibraryData() {
   useEffect(() => {
     if (playlist_id != null) {
       getPlaylist(playlist_id).then((data) => {
-        setIsLoading(false);
         setPlaylistData(data);
+        setIsLoading(false);
       });
     }
   }, []);
+  useEffect(() => {
+    console.log("Playlist Data", playlistData);
+  }, [playlistData]);
+
+  useEffect(() => {
+    if (playlistData && playlistData.title) {
+      document.title = `${playlistData.title} - YT Music Downloader`;
+    }
+  }, [playlistData]);
 
   function download_song(url) {
     showDownload();

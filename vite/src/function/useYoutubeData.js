@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import async_Home from "./async/async_Home";
+import api from "./api";
 
 function useYoutubeData() {
-  const { getAllPlaylist } = async_Home();
+  const { Home } = api();
+  const { getAllPlaylist } = Home();
 
   const [isLoading, setIsLoading] = useState(true);
   const [playlist, setPlaylist] = useState([]);

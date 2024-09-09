@@ -1,28 +1,55 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Navbar from "./components/Navbar";
-import Library from "./pages/Library";
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useParams,
+} from "react-router-dom";
 import "primeicons/primeicons.css";
-import Download from "./pages/Download";
-import PlaySong from "./pages/Download/PlaySong";
-import About from "./pages/About";
+import { lazy, Suspense, useContext } from "react";
+import { MyContext } from "./ContextProvider";
+import useDownloadData from "./function/useDownloadData";
+const Loading = lazy(() => import("./pages/Loading"));
+const Home = lazy(() => import("./pages/Home"));
+const Navbar = lazy(() => import("./components/Navbar"));
+const Library = lazy(() => import("./pages/Library"));
+const Download = lazy(() => import("./pages/Download"));
+const PlaySong = lazy(() => import("./pages/Download/PlaySong"));
+const About = lazy(() => import("./pages/About"));
 
 function App() {
   const channelId = "UCm1Ta_ebXboWHcZBBvXYmwg";
+
+  const { fetchAudio } = useDownloadData();
+  const {
+    audio,
+    AudioTemplateContext,
+    handleAudio,
+    handlePlayerState,
+    playerState,
+  } = useContext(MyContext);
 
   return (
     <>
       <Router>
         <Navbar channelId={channelId}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/download" element={<Download />}>
-              <Route path=":song_title" element={<PlaySong />} />
-            </Route>
-            <Route path="/about" element={<About />}></Route>
-            <Route path="/browse/:playlist_id" element={<Library />} />
-          </Routes>
+          <Suspense fallback={<Loading />}>
+            {audio.id != undefined ? (
+              <PlaySong
+                audio={audio}
+                handleAudio={handleAudio}
+                AudioTemplateContext={AudioTemplateContext}
+                fetchAudio={fetchAudio}
+                handlePlayerState={handlePlayerState}
+                playerState={playerState}
+              />
+            ) : null}
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/download" element={<Download />}></Route>
+              <Route path="/about" element={<About />}></Route>
+              <Route path="/browse/:playlist_id" element={<Library />} />
+            </Routes>
+          </Suspense>
         </Navbar>
       </Router>
     </>

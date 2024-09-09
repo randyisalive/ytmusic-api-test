@@ -1,4 +1,9 @@
+.venv
 
 *.mp3
 /downloads
 /oauth
+
+/flask/myenv
+/flask/.env
+__pycache__

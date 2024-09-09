@@ -1,10 +1,8 @@
-import global_const from "../global_const";
-
-const { url_custom } = global_const();
+import { base_url } from "../global_const";
 
 export async function logSearch(search) {
   try {
-    const response = await fetch(url_custom + "/search", {
+    const response = await fetch(base_url + "/search", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,7 +18,7 @@ export async function logSearch(search) {
 
 export async function getPlaylist(id) {
   try {
-    const response = await fetch(url_custom + "/api/get_playlist", {
+    const response = await fetch(base_url + "/api/get_playlist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +34,7 @@ export async function getPlaylist(id) {
 
 export async function getUser(channelId) {
   try {
-    const response = await fetch(url_custom + "/api/user", {
+    const response = await fetch(base_url + "/api/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +50,7 @@ export async function getUser(channelId) {
 
 export async function downloadSong(url) {
   try {
-    const response = await fetch(url_custom + "/api/download", {
+    const response = await fetch(base_url + "/api/download", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +66,7 @@ export async function downloadSong(url) {
 
 export async function open_folder() {
   try {
-    const response = await fetch(url_custom + "/api/open_folder");
+    const response = await fetch(base_url + "/api/open_folder");
     const data = await response.json();
     return data;
   } catch (e) {

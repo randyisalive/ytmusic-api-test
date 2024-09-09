@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify, send_file
+from services.DownloadService import GetDownloadAudio
 import os
 
 SystemController = Blueprint("SystemController", __name__)
@@ -16,9 +17,8 @@ def open_folder():
 def get_audio():
     data = request.get_json()
     song_title = data.get("song_title")
-    current_dir = os.getcwd()
-    audio_path = f"{current_dir}/downloads/{song_title}"
-    if os.path.exists(audio_path):
-        print("audio path: ", audio_path)
-        return send_file(audio_path, mimetype="audio/mp3")
+    data = GetDownloadAudio(song_title)
+    print(data)
+    if data:
+        return send_file(data, mimetype="audio/mp3")
     return jsonify({"message": False})

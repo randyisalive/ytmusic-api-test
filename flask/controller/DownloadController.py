@@ -7,8 +7,9 @@ DownloadController = Blueprint("DownloadController", __name__)
 
 @DownloadController.route("/api/get-downloads")
 def get_download():
+    data = GetDownload()
     if request.method == "GET":
-        data = GetDownload()
+        print(data)
         return jsonify(data)
     return jsonify({"route": "/api/get_downloads"})
 

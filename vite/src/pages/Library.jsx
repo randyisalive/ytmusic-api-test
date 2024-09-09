@@ -3,19 +3,11 @@ import Loading from "./Loading";
 import { Toast } from "primereact/toast";
 import LibraryList from "../components/LibraryList";
 import { open_folder } from "../function/async/async_function";
-
 import "./css/library.css";
-import { useEffect } from "react";
 
 function Library() {
   const { playlistData, isLoading, download_song, toast, toastDownload } =
     useLibraryData();
-
-  useEffect(() => {
-    if (playlistData && playlistData.title) {
-      document.title = `${playlistData.title} - YT Music Downloader`;
-    }
-  }, [playlistData]);
 
   if (isLoading) {
     return (
@@ -41,8 +33,8 @@ function Library() {
             <span>{playlistData.privacy}</span>
             <span>
               {window.location.pathname === "/browse/LM"
-                ? null
-                : playlistData.author.name}
+                ? playlistData.author.name
+                : null}
             </span>
           </div>
           <div

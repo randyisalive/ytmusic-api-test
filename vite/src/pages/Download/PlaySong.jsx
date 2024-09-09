@@ -1,55 +1,52 @@
 import { useOutletContext, useParams } from "react-router-dom";
 import "./play-song.css";
 import { useEffect, useState } from "react";
-import useDownloadData from "../../function/useDownloadData";
-import AudioPlayer from "react-h5-audio-player";
-
+import { motion } from "framer-motion";
 import "./play-song.css";
 import "react-h5-audio-player/lib/styles.css";
 
-function PlaySong() {
-  const { fetchAudio } = useDownloadData();
-  const { song_title } = useParams();
-  const [audioSrc, setAudioSrc] = useState("");
-
+function PlaySong({
+  audio,
+  AudioTemplateContext,
+  fetchAudio,
+  handleAudio,
+  handlePlayerState,
+  playerState,
+}) {
   useEffect(() => {
-    fetchAudio(song_title).then((data) => {
-      setAudioSrc(data);
-    });
+    if (audio.id) {
+      fetchAudio(audio.id).then((data) => {
+        const audio = data;
+        handleAudio({ audio: audio });
+      });
+    }
+    console.log(audio);
+  }, [audio.id]);
 
-    document.title = `${song_title.replace(".mp3", "")} - YT Music Downloader`;
-  }, [song_title]);
-
-  console.log(audioSrc);
-
-  if (audioSrc === undefined) {
-    return <></>;
-  }
+  const variants = {
+    open: { display: "none", y: 0 },
+    closed: { y: 100 },
+    maximized: { height: "100%" },
+  };
 
   return (
     <>
-      <div
-        className="d-flex flex-column mt-5 song-card w-100 justify-content-center"
-        id="audio-player"
+      <motion.div
+        className="d-flex w-100"
+        variants={variants}
+        initial={{ display: "none", zIndex: 1 }}
+        onClick={(e, i) => handlePlayerState(2)}
+        style={{ position: "absolute", left: 0, bottom: 0 }}
+        animate={
+          playerState.status === 0
+            ? "open"
+            : playerState.status === 2
+            ? "maximized"
+            : null
+        }
       >
-        <div className="d-flex mb-5">
-          <span className="display-6">{song_title.replace(".mp3", "")}</span>
-        </div>
-
-        <div
-          className="d-flex w-100"
-          style={{ justifyContent: "space-between" }}
-        >
-          <div className="d-flex w-100">
-            <AudioPlayer
-              style={{ background: "none" }}
-              className="react-h5-audio-player"
-              src={audioSrc}
-              // other props here
-            />
-          </div>
-        </div>
-      </div>
+        <AudioTemplateContext />
+      </motion.div>
     </>
   );
 }

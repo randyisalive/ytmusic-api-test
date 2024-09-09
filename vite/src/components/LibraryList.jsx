@@ -8,7 +8,7 @@ function LibraryList({ download_song, playlistData }) {
       {playlistData.tracks.map((item) => {
         return (
           <>
-            <Link to={`/download/${item.title}.mp3`}>
+            <Link to={`/download/${item.id}/${item.title}.mp3`}>
               <div
                 className="w-100 d-flex hover-card p-3 text-white"
                 style={{ justifyContent: "space-between" }}
