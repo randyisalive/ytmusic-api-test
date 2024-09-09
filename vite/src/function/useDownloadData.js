@@ -10,6 +10,16 @@ function useDownloadData() {
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [playerState, setPlayerState] = useState({
+    status: 0,
+  });
+
+  const handlePlayerState = (value) => {
+    setPlayerState({
+      status: value,
+    });
+  };
+
   useEffect(() => {
     get_download_data();
   }, [refresh]);
@@ -19,6 +29,10 @@ function useDownloadData() {
       console.log("Download Data: ", downloadData);
     }
   }, [downloadData]);
+
+  useEffect(() => {
+    console.log("PlayerState Data: ", playerState);
+  }, [playerState]);
 
   function get_download_data() {
     GetDownload().then((data) => {
@@ -42,6 +56,8 @@ function useDownloadData() {
     audio,
     handleAudio,
     AudioTemplateContext,
+    playerState,
+    handlePlayerState,
   };
 }
 

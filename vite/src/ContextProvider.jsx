@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useMemo, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
+import { motion } from "framer-motion";
 
 export const MyContext = createContext();
 
@@ -8,9 +9,6 @@ function ContextProvider({ children }) {
     audio: undefined,
     title: "",
     id: undefined,
-  });
-  const [playerState, setPlayerState] = useState({
-    status: 0,
   });
 
   const handleAudio = (params) => {
@@ -23,19 +21,16 @@ function ContextProvider({ children }) {
     }));
   };
 
-  const handlePlayerState = (value) => {
+  /*  const handlePlayerState = (value) => {
     setPlayerState({
       status: value,
     });
-  };
+  }; */
   useEffect(() => {
     console.log("AUDIO", audio);
   }, [audio]);
-  useEffect(() => {
-    console.log("Player State", playerState);
-  }, [playerState]);
 
-  function AudioTemplateContext() {
+  function AudioTemplateContext({ audio, onClickHeader }) {
     const memoizedAudioPlayer = useMemo(() => {
       return (
         <AudioPlayer
@@ -43,11 +38,22 @@ function ContextProvider({ children }) {
           className="react-h5-audio-player"
           src={audio.audio}
           autoPlay
-          header={audio.title}
+          header={
+            <motion.div
+              whileHover={{ textDecorationLine: "underline" }}
+              onClick={onClickHeader}
+              style={{ cursor: "pointer" }}
+            >
+              {audio.title}
+            </motion.div>
+          }
+          onVolumeChange={(e) =>
+            console.log("Volume changed:", e.target.volume)
+          }
           // other props here
         />
       );
-    }, [audio.audio, audio.title]);
+    }, [audio.audio, audio.title, onClickHeader]);
 
     return <>{memoizedAudioPlayer}</>;
   }
@@ -58,8 +64,6 @@ function ContextProvider({ children }) {
         audio,
         handleAudio,
         AudioTemplateContext,
-        handlePlayerState,
-        playerState,
       }}
     >
       {children}

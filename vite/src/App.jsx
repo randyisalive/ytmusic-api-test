@@ -1,11 +1,6 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "primeicons/primeicons.css";
-import { lazy, Suspense, useContext } from "react";
+import { lazy, Suspense, useContext, useState } from "react";
 import { MyContext } from "./ContextProvider";
 import useDownloadData from "./function/useDownloadData";
 const Loading = lazy(() => import("./pages/Loading"));
@@ -19,14 +14,7 @@ const About = lazy(() => import("./pages/About"));
 function App() {
   const channelId = "UCm1Ta_ebXboWHcZBBvXYmwg";
 
-  const { fetchAudio } = useDownloadData();
-  const {
-    audio,
-    AudioTemplateContext,
-    handleAudio,
-    handlePlayerState,
-    playerState,
-  } = useContext(MyContext);
+  const { audio, AudioTemplateContext, handleAudio } = useContext(MyContext);
 
   return (
     <>
@@ -38,9 +26,6 @@ function App() {
                 audio={audio}
                 handleAudio={handleAudio}
                 AudioTemplateContext={AudioTemplateContext}
-                fetchAudio={fetchAudio}
-                handlePlayerState={handlePlayerState}
-                playerState={playerState}
               />
             ) : null}
             <Routes>

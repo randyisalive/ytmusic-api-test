@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "./css/navbar-item.css";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import Footer from "./Footer";
 
 function NavbarItem() {
@@ -16,23 +17,36 @@ function NavbarItem() {
       label: "Youtube Music",
     },
   ];
+
+  const variants = {
+    min: { borderRadius: "0", maxWidth: "0", justifyContent: "space-between" },
+    max: {
+      maxWidth: "350px",
+    },
+    minBox: {
+      width: "fit-content",
+    },
+  };
   return (
     <>
-      <div
+      <motion.div
+        variants={variants}
+        initial="min"
+        animate="max"
         id="outer-container-navbar"
         className="p-2 navbar-container d-flex flex-column"
-        style={{
-          borderRadius: "0",
-          maxWidth: "350px",
-          justifyContent: "space-between",
-        }}
       >
-        <div
+        <motion.div
+          variants={variants}
+          animate={expand ? "max" : "min"}
           className=" p-3 gap-3 navbar-card d-flex flex-column"
           style={{ width: "fit-content" }}
         >
           <div className="d-flex align-items-center gap-2 mb-5">
-            <div
+            <motion.div
+              whileHover={{
+                scale: 1.1,
+              }}
               className="d-flex me-3"
               style={{ cursor: "pointer" }}
               onClick={() => {
@@ -43,7 +57,7 @@ function NavbarItem() {
                 className="pi pi-bars text-white"
                 style={{ fontSize: "1.5rem" }}
               ></i>
-            </div>
+            </motion.div>
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Youtube_Music_icon.svg/2048px-Youtube_Music_icon.svg.png"
               alt=""
@@ -75,10 +89,10 @@ function NavbarItem() {
               </>
             );
           })}
-        </div>
+        </motion.div>
 
         <Footer />
-      </div>
+      </motion.div>
     </>
   );
 }
