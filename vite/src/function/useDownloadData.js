@@ -3,7 +3,8 @@ import api from "./api";
 import { MyContext } from "../ContextProvider";
 
 function useDownloadData() {
-  const { audio, handleAudio, AudioTemplateContext } = useContext(MyContext);
+  const { audio, handleAudio, AudioTemplateContext, songStats, handleStats } =
+    useContext(MyContext);
   const { Download } = api();
   const { GetDownload, DeleteDownload, fetchAudio } = Download();
   const [downloadData, setDownloadData] = useState([]);
@@ -58,6 +59,8 @@ function useDownloadData() {
     AudioTemplateContext,
     playerState,
     handlePlayerState,
+    songStats,
+    handleStats,
   };
 }
 

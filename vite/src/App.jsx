@@ -14,20 +14,19 @@ const About = lazy(() => import("./pages/About"));
 function App() {
   const channelId = "UCm1Ta_ebXboWHcZBBvXYmwg";
 
-  const { audio, AudioTemplateContext, handleAudio } = useContext(MyContext);
+  const { audio, AudioTemplateContext, handleAudio, songStats } =
+    useContext(MyContext);
 
   return (
     <>
       <Router>
         <Navbar channelId={channelId}>
           <Suspense fallback={<Loading />}>
-            {audio.id != undefined ? (
-              <PlaySong
-                audio={audio}
-                handleAudio={handleAudio}
-                AudioTemplateContext={AudioTemplateContext}
-              />
-            ) : null}
+            <PlaySong
+              audio={audio}
+              handleAudio={handleAudio}
+              AudioTemplateContext={AudioTemplateContext}
+            />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/download" element={<Download />}></Route>

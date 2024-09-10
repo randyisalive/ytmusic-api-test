@@ -4,8 +4,14 @@ import { Link, Outlet } from "react-router-dom";
 import useDownloadData from "../function/useDownloadData";
 
 function Download() {
-  const { isLoading, downloadData, delete_download, handleAudio } =
-    useDownloadData();
+  const {
+    isLoading,
+    downloadData,
+    delete_download,
+    handleAudio,
+    songStats,
+    handleStats,
+  } = useDownloadData();
   return (
     <>
       <Link
@@ -25,6 +31,8 @@ function Download() {
                 <PlaylistCard
                   key={item.song_title}
                   item={item}
+                  songStats={songStats}
+                  handleStats={handleStats}
                   download_page={true}
                   handleAudio={handleAudio}
                   delete_download={delete_download}

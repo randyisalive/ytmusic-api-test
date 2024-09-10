@@ -2,28 +2,43 @@ import { useOutletContext, useParams } from "react-router-dom";
 import "./play-song.css";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import "./play-song.css";
 import "react-h5-audio-player/lib/styles.css";
 import useDownloadData from "../../function/useDownloadData";
 
 function PlaySong({ audio, AudioTemplateContext, handleAudio }) {
-  const { fetchAudio, playerState, handlePlayerState } = useDownloadData();
+  const { fetchAudio, playerState, handlePlayerState, songStats, handleStats } =
+    useDownloadData();
+  const [isLoading, setLoading] = useState(true);
+
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+
+  const debouncedFetchAudio = debounce((id) => {
+    fetchAudio(id).then((data) => {
+      handleAudio({ audio: data, autoPlay: true });
+    });
+  }, 2000);
 
   useEffect(() => {
-    if (audio.id) {
-      fetchAudio(audio.id).then((data) => {
-        const audio = data;
-        handleAudio({ audio: audio });
-      });
+    handleAudio({ audio: undefined, autoPlay: false });
+
+    if (songStats.id) {
+      debouncedFetchAudio(songStats.id);
     }
-    console.log(audio);
-  }, [audio.id]);
+  }, [songStats.id]);
 
   const variants = {
     open: { display: "none", y: 0 },
     closed: { y: 100 },
     maximized: { height: "100%" },
-    minimized: { height: "0%" },
+    minimized: { height: "" },
   };
 
   return (
@@ -38,14 +53,17 @@ function PlaySong({ audio, AudioTemplateContext, handleAudio }) {
             ? "open"
             : playerState.status === 2
             ? "maximized"
-            : null
+            : playerState.status === 3
+            ? "minimized"
+            : "closed"
         }
       >
         <AudioTemplateContext
           audio={audio}
-          onClickHeader={() =>
-            handlePlayerState(playerState.status === 2 ? 3 : 2)
-          }
+          onClickHeader={() => {
+            handlePlayerState(playerState.status + 1);
+          }}
+          songStats={songStats}
         />
       </motion.div>
     </>

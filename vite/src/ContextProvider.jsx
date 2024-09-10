@@ -9,42 +9,56 @@ function ContextProvider({ children }) {
     audio: undefined,
     title: "",
     id: undefined,
+    autoPlay: false,
   });
 
-  const handleAudio = (params) => {
-    const { audio, title, id } = params;
-    setAudio((prev) => ({
+  const [songStats, setSongStats] = useState({
+    title: undefined,
+    id: undefined,
+  });
+
+  const handleStats = (params) => {
+    const { title, id } = params;
+    setSongStats((prev) => ({
       ...prev,
-      ...(audio && { audio }),
       ...(title && { title }),
       ...(id && { id }),
     }));
   };
 
-  /*  const handlePlayerState = (value) => {
-    setPlayerState({
-      status: value,
-    });
-  }; */
+  const handleAudio = (params) => {
+    const { audio, title, id, autoPlay } = params;
+    setAudio((prev) => ({
+      ...prev,
+      ...(audio && { audio }),
+      ...(title && { title }),
+      ...(id && { id }),
+      ...(autoPlay && { autoPlay }),
+    }));
+  };
+
   useEffect(() => {
     console.log("AUDIO", audio);
   }, [audio]);
+  useEffect(() => {
+    console.log("Song Stats", songStats);
+  }, [songStats]);
 
-  function AudioTemplateContext({ audio, onClickHeader }) {
+  function AudioTemplateContext({ audio, onClickHeader, songStats }) {
     const memoizedAudioPlayer = useMemo(() => {
       return (
         <AudioPlayer
           style={{ background: "none" }}
           className="react-h5-audio-player"
           src={audio.audio}
-          autoPlay
+          autoPlay={audio.autoPlay}
           header={
             <motion.div
               whileHover={{ textDecorationLine: "underline" }}
               onClick={onClickHeader}
               style={{ cursor: "pointer" }}
             >
-              {audio.title}
+              {songStats.title}
             </motion.div>
           }
           onVolumeChange={(e) =>
@@ -53,7 +67,7 @@ function ContextProvider({ children }) {
           // other props here
         />
       );
-    }, [audio.audio, audio.title, onClickHeader]);
+    }, [audio.audio, songStats.title]);
 
     return <>{memoizedAudioPlayer}</>;
   }
@@ -64,6 +78,8 @@ function ContextProvider({ children }) {
         audio,
         handleAudio,
         AudioTemplateContext,
+        songStats,
+        handleStats,
       }}
     >
       {children}
