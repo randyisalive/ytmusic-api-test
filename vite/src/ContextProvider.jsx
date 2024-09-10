@@ -20,19 +20,15 @@ function ContextProvider({ children }) {
   const handleStats = (params) => {
     const { title, id } = params;
     setSongStats((prev) => ({
-      ...prev,
       ...(title && { title }),
       ...(id && { id }),
     }));
   };
 
   const handleAudio = (params) => {
-    const { audio, title, id, autoPlay } = params;
+    const { audio, autoPlay } = params;
     setAudio((prev) => ({
-      ...prev,
       ...(audio && { audio }),
-      ...(title && { title }),
-      ...(id && { id }),
       ...(autoPlay && { autoPlay }),
     }));
   };

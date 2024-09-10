@@ -8,14 +8,13 @@ const Home = lazy(() => import("./pages/Home"));
 const Navbar = lazy(() => import("./components/Navbar"));
 const Library = lazy(() => import("./pages/Library"));
 const Download = lazy(() => import("./pages/Download"));
-const PlaySong = lazy(() => import("./pages/Download/PlaySong"));
+const PlaySong = lazy(() => import("./PlaySong"));
 const About = lazy(() => import("./pages/About"));
 
 function App() {
   const channelId = "UCm1Ta_ebXboWHcZBBvXYmwg";
 
-  const { audio, AudioTemplateContext, handleAudio, songStats } =
-    useContext(MyContext);
+  const { audio, AudioTemplateContext, handleAudio } = useContext(MyContext);
 
   return (
     <>

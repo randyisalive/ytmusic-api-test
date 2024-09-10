@@ -18,32 +18,22 @@ function NavbarItem() {
     },
   ];
 
-  const variants = {
-    min: { borderRadius: "0", maxWidth: "0", justifyContent: "space-between" },
-    max: {
-      maxWidth: "350px",
-    },
-    minBox: {
-      width: "fit-content",
-    },
-  };
   return (
     <>
       <motion.div
-        variants={variants}
-        initial="min"
-        animate="max"
+        animate={expand ? { width: "300px" } : { width: "78px" }}
         id="outer-container-navbar"
+        style={{ justifyContent: "space-between" }}
         className="p-2 navbar-container d-flex flex-column"
       >
         <motion.div
-          variants={variants}
-          animate={expand ? "max" : "min"}
+          animate={expand ? { width: "250px", opacity: 1 } : { width: "58px" }}
           className=" p-3 gap-3 navbar-card d-flex flex-column"
           style={{ width: "fit-content" }}
         >
-          <div className="d-flex align-items-center gap-2 mb-5">
+          <motion.div className="d-flex align-items-center mb-3">
             <motion.div
+              animate={expand ? {} : { opacity: 1 }}
               whileHover={{
                 scale: 1.1,
               }}
@@ -58,40 +48,75 @@ function NavbarItem() {
                 style={{ fontSize: "1.5rem" }}
               ></i>
             </motion.div>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Youtube_Music_icon.svg/2048px-Youtube_Music_icon.svg.png"
-              alt=""
-              width={50}
-            />
-            {expand ? (
+            <motion.div
+              className="d-flex gap-2"
+              initial={{ opacity: 0 }}
+              animate={expand ? { opacity: 1 } : { opacity: 0 }}
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Youtube_Music_icon.svg/2048px-Youtube_Music_icon.svg.png"
+                alt=""
+                width={50}
+              />
+
               <label htmlFor="" className="h5 m-0 text-white">
                 YT Music Downloader
               </label>
-            ) : null}
-          </div>
-          {navbarItem.map((item) => {
-            return (
-              <>
-                <Link className="navbar-container-text" to={`${item.link}`}>
-                  <div
-                    className={`d-flex ${
-                      expand ? null : "justify-content-center"
-                    } `}
-                  >
-                    <div className="d-flex align-items-center" id="icon-item">
-                      <i className={`pi pi-${item.icon} h5 m-0`}></i>
-                    </div>
-                    {expand ? (
-                      <div className="d-flex h5 m-0">{`${item.label}`}</div>
-                    ) : null}
-                  </div>
-                </Link>
-              </>
-            );
-          })}
+            </motion.div>
+          </motion.div>
+          <motion.div
+            animate={
+              expand
+                ? { scale: 1, width: "fit-content" }
+                : {
+                    opacity: 1,
+                    display: "none",
+                    width: "20px",
+                  }
+            }
+            className="d-flex flex-column gap-3 w-100"
+          >
+            {navbarItem.map((item) => {
+              return (
+                <>
+                  <Link className="navbar-container-text" to={`${item.link}`}>
+                    <motion.div
+                      animate={
+                        expand
+                          ? { opacity: 1, width: "100%" }
+                          : { opacity: 1, width: "fit-content" }
+                      }
+                      className={`d-flex ${
+                        expand ? null : "justify-content-center"
+                      } `}
+                    >
+                      <motion.div
+                        animate={expand ? { width: "20%" } : {}}
+                        className="d-flex"
+                        id="icon-item"
+                      >
+                        <i className={`pi pi-${item.icon} h5 m-0`}></i>
+                      </motion.div>
+
+                      <motion.div
+                        animate={
+                          expand
+                            ? { opacity: 1 }
+                            : { opacity: 0, fontSize: "8px" }
+                        }
+                        className="d-flex h5 m-0 w-100 "
+                      >{`${item.label}`}</motion.div>
+                    </motion.div>
+                  </Link>
+                </>
+              );
+            })}
+          </motion.div>
         </motion.div>
 
-        <Footer />
+        <motion.div animate={expand ? { opacity: 1 } : { opacity: 0 }}>
+          <Footer />
+        </motion.div>
       </motion.div>
     </>
   );

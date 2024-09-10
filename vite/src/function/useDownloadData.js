@@ -15,10 +15,10 @@ function useDownloadData() {
     status: 0,
   });
 
-  const handlePlayerState = (value) => {
-    setPlayerState({
-      status: value,
-    });
+  const handlePlayerState = (var_len) => {
+    setPlayerState((prev) => ({
+      status: (prev.status + 1) % var_len, // Cycle through 0, 1, 2, 3
+    }));
   };
 
   useEffect(() => {

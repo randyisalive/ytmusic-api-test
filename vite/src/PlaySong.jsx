@@ -1,14 +1,12 @@
-import { useOutletContext, useParams } from "react-router-dom";
 import "./play-song.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import "react-h5-audio-player/lib/styles.css";
-import useDownloadData from "../../function/useDownloadData";
+import useDownloadData from "./function/useDownloadData";
 
 function PlaySong({ audio, AudioTemplateContext, handleAudio }) {
-  const { fetchAudio, playerState, handlePlayerState, songStats, handleStats } =
+  const { fetchAudio, playerState, handlePlayerState, songStats } =
     useDownloadData();
-  const [isLoading, setLoading] = useState(true);
 
   const debounce = (func, delay) => {
     let timeoutId;
@@ -24,7 +22,7 @@ function PlaySong({ audio, AudioTemplateContext, handleAudio }) {
     fetchAudio(id).then((data) => {
       handleAudio({ audio: data, autoPlay: true });
     });
-  }, 2000);
+  }, 10);
 
   useEffect(() => {
     handleAudio({ audio: undefined, autoPlay: false });
@@ -35,10 +33,11 @@ function PlaySong({ audio, AudioTemplateContext, handleAudio }) {
   }, [songStats.id]);
 
   const variants = {
-    open: { display: "none", y: 0 },
-    closed: { y: 100 },
-    maximized: { height: "100%" },
-    minimized: { height: "" },
+    open: { y: 300 },
+    openOn: { zIndex: 1, y: 0 },
+    // closed: { y: 100 },
+    maximized: { height: "100%", y: 0 },
+    // minimized: { height: "" },
   };
 
   return (
@@ -46,22 +45,22 @@ function PlaySong({ audio, AudioTemplateContext, handleAudio }) {
       <motion.div
         className="d-flex w-100"
         variants={variants}
-        initial={{ display: "none", zIndex: 1 }}
+        initial={{ y: 300 }}
         style={{ position: "absolute", left: 0, bottom: 0 }}
         animate={
           playerState.status === 0
-            ? "open"
-            : playerState.status === 2
+            ? audio.audio
+              ? "openOn"
+              : "open"
+            : playerState.status === 1
             ? "maximized"
-            : playerState.status === 3
-            ? "minimized"
-            : "closed"
+            : "openOn"
         }
       >
         <AudioTemplateContext
           audio={audio}
           onClickHeader={() => {
-            handlePlayerState(playerState.status + 1);
+            handlePlayerState(2);
           }}
           songStats={songStats}
         />
