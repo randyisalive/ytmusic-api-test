@@ -1,4 +1,3 @@
-import useUserData from "../function/useUserData";
 import "./css/navbar.css";
 import NavbarItem from "./NavbarItem";
 

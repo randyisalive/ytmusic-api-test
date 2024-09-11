@@ -1,12 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "./api";
-import { MyContext } from "../ContextProvider";
 
 function useDownloadData() {
-  const { audio, handleAudio, AudioTemplateContext, songStats, handleStats } =
-    useContext(MyContext);
-  const { Download } = api();
-  const { GetDownload, DeleteDownload, fetchAudio } = Download();
+  const { DownloadApi } = api();
+  const { GetDownload, DeleteDownload, fetchAudio } = DownloadApi();
   const [downloadData, setDownloadData] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,13 +51,8 @@ function useDownloadData() {
     isLoading,
     delete_download,
     fetchAudio,
-    audio,
-    handleAudio,
-    AudioTemplateContext,
     playerState,
     handlePlayerState,
-    songStats,
-    handleStats,
   };
 }
 

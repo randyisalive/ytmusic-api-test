@@ -15,7 +15,7 @@ function api() {
     return { getAllPlaylist };
   }
 
-  function Download() {
+  function DownloadApi() {
     async function GetDownload() {
       const url = base_url + "/api/get-downloads";
       try {
@@ -61,6 +61,10 @@ function api() {
       }
     }
 
+    return { DeleteDownload, GetDownload, InsertDownload };
+  }
+
+  function AudioPlayerApi() {
     async function fetchAudio(song_title) {
       try {
         const response = await fetch(base_url + "/api/get-audio", {
@@ -85,10 +89,9 @@ function api() {
         console.error("Error fetching audio:", error);
       }
     }
-
-    return { fetchAudio, DeleteDownload, GetDownload, InsertDownload };
+    return { fetchAudio };
   }
-  return { Home, Download };
+  return { Home, DownloadApi, AudioPlayerApi };
 }
 
 export default api;

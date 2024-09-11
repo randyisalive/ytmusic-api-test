@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useMemo, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import { motion } from "framer-motion";
 
@@ -32,13 +32,6 @@ function ContextProvider({ children }) {
       ...(autoPlay && { autoPlay }),
     }));
   };
-
-  useEffect(() => {
-    console.log("AUDIO", audio);
-  }, [audio]);
-  useEffect(() => {
-    console.log("Song Stats", songStats);
-  }, [songStats]);
 
   function AudioTemplateContext({ audio, onClickHeader, songStats }) {
     const memoizedAudioPlayer = useMemo(() => {
