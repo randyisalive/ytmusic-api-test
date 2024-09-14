@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { downloadSong, getPlaylist } from "./async/async_function";
+import { AudioContext } from "../context/AudioContext";
 
 function useLibraryData() {
   const { playlist_id } = useParams();
   const [playlistData, setPlaylistData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { handleAudio } = useContext(AudioContext);
 
   const toast = useRef(null);
   const toastDownload = useRef(null);
@@ -57,6 +59,7 @@ function useLibraryData() {
       if (data.message === true) {
         toastOff("downloadToast");
         show();
+        handleAudio({ video_id: data.song_data.video_id, id: 1 });
       }
     });
   }

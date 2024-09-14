@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 # services
 from services.DownloadService import InsertDownload, CheckDownload
 from services.MoviepyServices import ConvertToMp3
-from yt import json_path, yt
+from yt import yt
 
 # controller
 from controller.SystemController import SystemController
@@ -80,18 +80,33 @@ def download_url():
             stream = yt.streams.get_audio_only()
             print(stream)
             filename = yt.title + ".mp3"
+            video_id = yt.video_id
             stream.stream_to_buffer(buffer)
             buffer.seek(0)
             audio_data = buffer.read()
+            author_name = yt.author
+            author_id = yt.channel_id
             # Assuming ConvertToMp3 is a custom function you have defined
             # ConvertToMp3(download_path, file_remove=True)
 
             # Assuming CheckDownload is a function that checks if the download was successful
             if CheckDownload(filename):
                 # Assuming InsertDownload is a function that logs the download
-                InsertDownload(f"{yt.title}.mp3", audio_data)
+                InsertDownload(
+                    yt.thumbnail_url,
+                    video_id,
+                    yt.title,
+                    author_id,
+                    author_name,
+                    audio_data,
+                )
 
-            return jsonify({"message": True, "song_title": yt.title})
+            return jsonify(
+                {
+                    "message": True,
+                    "song_data": {"title": yt.title, "video_id": video_id},
+                }
+            )
         except Exception as e:
             print(e)
             return jsonify({"message": False})

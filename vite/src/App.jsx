@@ -1,7 +1,8 @@
-import React from "react";
+import React, { memo, useContext, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { AudioTemplate } from "./AudioTemplate";
+import Player from "./Player";
 const Loading = lazy(() => import("./pages/Loading"));
 const Home = lazy(() => import("./pages/Home"));
 const Navbar = lazy(() => import("./components/Navbar"));
@@ -14,18 +15,18 @@ function App() {
 
   return (
     <Router>
-      <Navbar channelId={channelId}>
-        <Suspense fallback={<Loading />}>
-          <AudioTemplate>
+      <AudioTemplate>
+        <Navbar channelId={channelId}>
+          <Suspense fallback={<Loading />}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/download" element={<Download />} />
               <Route path="/about" element={<About />} />
               <Route path="/browse/:playlist_id" element={<Library />} />
             </Routes>
-          </AudioTemplate>
-        </Suspense>
-      </Navbar>
+          </Suspense>
+        </Navbar>
+      </AudioTemplate>
     </Router>
   );
 }

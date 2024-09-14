@@ -7,7 +7,7 @@ import { AudioContext } from "../context/AudioContext";
 import { motion } from "framer-motion";
 
 function Download() {
-  const { audio, playerState, handleAudio } = useContext(AudioContext);
+  const { handleAudio } = useContext(AudioContext);
   const { isLoading, downloadData, delete_download } = useDownloadData();
 
   return (

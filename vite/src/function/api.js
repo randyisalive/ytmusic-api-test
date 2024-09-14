@@ -65,7 +65,7 @@ function api() {
   }
 
   function AudioPlayerApi() {
-    async function fetchAudio(song_title) {
+    async function fetchAudio(video_id) {
       try {
         const response = await fetch(base_url + "/api/get-audio", {
           method: "POST",
@@ -73,7 +73,7 @@ function api() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ song_title }),
+          body: JSON.stringify({ video_id }),
         });
         if (!response.ok) {
           throw new Error("ERROR");

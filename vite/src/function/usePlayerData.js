@@ -3,7 +3,6 @@ import Download from "../pages/Download";
 import api from "./api";
 
 function usePlayerData() {
-  const [refresh, setRefresh] = useState(false);
   const { AudioPlayerApi } = api();
   const { fetchAudio } = AudioPlayerApi();
 
@@ -15,9 +14,9 @@ function usePlayerData() {
   });
 
   const handleAudio = (params) => {
-    const { title, id } = params;
-    fetchAudio(id).then((data) => {
-      setAudio({ audio: data, title: title, id: id });
+    const { video_id, id } = params;
+    fetchAudio(video_id).then((data) => {
+      setAudio({ audio: data, video_id: video_id, id: id });
     });
   };
 
@@ -31,11 +30,6 @@ function usePlayerData() {
       status: (prev.status + 1) % var_len, // Cycle through 0, 1, 2, 3
     }));
   };
-
-  useEffect(() => {
-    console.log("Audio:", audio);
-    console.log("playerState:", playerState);
-  }, [audio, playerState]);
 
   return { audio, handleAudio, playerState, handlePlayerState };
 }

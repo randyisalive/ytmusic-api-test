@@ -16,9 +16,9 @@ def open_folder():
 @SystemController.route("/api/get-audio", methods=["GET", "POST"])
 def get_audio():
     data = request.get_json()
-    song_title = data.get("song_title")
-    data = GetDownloadAudio(song_title)
-    print(data)
+    video_id = data.get("video_id")
+    print(video_id)
+    data = GetDownloadAudio(video_id)
     if data:
         return send_file(data, mimetype="audio/mp3")
     return jsonify({"message": False})

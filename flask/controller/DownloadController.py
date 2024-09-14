@@ -18,9 +18,10 @@ def get_download():
 def insert_download():
     if request.method == "POST":
         data = request.get_json()
+        img = data.get("img")
+        song_id = data.get("song_id")
         song_title = data.get("song_title")
         if not song_title == "":
-            InsertDownload(f"{song_title}.mp3")
             return jsonify({"message": "song inserted!"})
         return jsonify({"message": "insert failed..."})
     return jsonify({"api: /api/insert-download"})
@@ -30,11 +31,9 @@ def insert_download():
 def delete():
     if request.method == "POST":
         data = request.get_json()
-        song_title = data.get("song_title")
-        path = f"downloads/{song_title}"
-        if os.path.exists(path):
-            os.remove(path)
-            DeleteDownload(song_title)
-            return jsonify({"message": "Delete" + path})
-        return jsonify({"message": path + " not found"})
+        id = data.get("song_title")
+        songs = GetDownload()
+        for i in songs:  # type: ignore
+            if id == i["id"]:
+                DeleteDownload(id)
     return jsonify({"api": "/api/delete"})

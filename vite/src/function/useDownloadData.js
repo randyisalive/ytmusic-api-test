@@ -39,8 +39,8 @@ function useDownloadData() {
     });
   }
 
-  function delete_download(song_title) {
-    DeleteDownload(song_title).then((data) => {
+  function delete_download(id) {
+    DeleteDownload(id).then((data) => {
       console.log(data);
       setRefresh(!refresh);
     });

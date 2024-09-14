@@ -8,10 +8,23 @@ def GetDownload():
     cur = db.cursor()
     try:
         table_name = "songs"
-        sql = "SELECT id, song_title FROM " + table_name
+        sql = (
+            "SELECT id, img, song_id, song_title, author_id, author_name FROM "
+            + table_name
+        )
         cur.execute(sql)
         songs = cur.fetchall()
-        songs_list = [{"id": i[0], "song_title": i[1]} for i in songs]
+        songs_list = [
+            {
+                "id": i[0],
+                "img": i[1],
+                "song_id": i[2],
+                "song_title": i[3],
+                "author_id": i[4],
+                "author_name": i[5],
+            }
+            for i in songs
+        ]
         cur.close()
         db.close()
         return songs_list
@@ -19,29 +32,34 @@ def GetDownload():
         print(e)
 
 
-def GetDownloadAudio(id):
+def GetDownloadAudio(video_id):
     db = db_connection()
     cur = db.cursor()
     try:
         table_name = "songs"
-        sql = f"SELECT data FROM {table_name} WHERE id = {id}"
-        cur.execute(sql)
+        sql = f"SELECT data FROM {table_name} WHERE song_id = ?"
+        cur.execute(sql, (video_id,))
         data = cur.fetchone()
         cur.close()
         db.close()
-        buffer = io.BytesIO(data[0])
-        buffer.seek(0)
-        return buffer
+        if data:
+            buffer = io.BytesIO(data[0])
+            buffer.seek(0)
+            return buffer
+        else:
+            print("No data found for the given video_id")
+            return None
     except Exception as e:
         print(e)
+        return None
 
 
-def CheckDownload(song_title):
+def CheckDownload(id):
     db = db_connection()
     cur = db.cursor()
     try:
-        sql = f"SELECT song_title FROM songs WHERE song_title = ?"
-        params = (song_title,)
+        sql = f"SELECT song_id FROM songs WHERE id = ?"
+        params = (id,)
         cur.execute(sql, params)
         song = cur.fetchall()
         print(len(song))
@@ -52,16 +70,20 @@ def CheckDownload(song_title):
         print(e)
 
 
-def InsertDownload(title, data):
+def InsertDownload(img, song_id, title, author_id, author_name, data):
     db = db_connection()
     cur = db.cursor()
     try:
         table_name = "songs"
         params = (
+            img,
+            song_id,
             title,
+            author_id,
+            author_name,
             data,
         )
-        sql = f"INSERT INTO {table_name} (song_title,data) VALUES (?,?)"
+        sql = f"INSERT INTO {table_name} (img,song_id,song_title,author_id, author_name,data) VALUES (?,?,?,?,?,?)"
         cur.execute(sql, params)
         db.commit()
         cur.close()
@@ -70,12 +92,12 @@ def InsertDownload(title, data):
         print(e)
 
 
-def DeleteDownload(title):
+def DeleteDownload(id):
     db = db_connection()
     cur = db.cursor()
     try:
-        sql = "DELETE FROM songs WHERE song_title = ?"
-        param = (title,)
+        sql = "DELETE FROM songs WHERE id = ?"
+        param = (id,)
         cur.execute(sql, param)
         db.commit()
         cur.close()
