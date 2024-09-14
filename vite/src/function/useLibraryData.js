@@ -2,12 +2,16 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { downloadSong, getPlaylist } from "./async/async_function";
 import { AudioContext } from "../context/AudioContext";
+import useDownloadData from "./useDownloadData";
 
 function useLibraryData() {
   const { playlist_id } = useParams();
   const [playlistData, setPlaylistData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { handleAudio } = useContext(AudioContext);
+
+  const { downloadData } = useDownloadData();
+  console.log(downloadData);
 
   const toast = useRef(null);
   const toastDownload = useRef(null);
@@ -30,7 +34,6 @@ function useLibraryData() {
       summary: "Info",
       detail: "Downloading...",
       key: "downloadToast",
-      life: "999999999",
     });
   };
 
@@ -53,13 +56,34 @@ function useLibraryData() {
   }, [playlistData]);
 
   function download_song(url) {
-    showDownload();
     downloadSong(url).then((data) => {
-      console.log(data);
+      console.log(data.message);
       if (data.message === true) {
-        toastOff("downloadToast");
         show();
-        handleAudio({ video_id: data.song_data.video_id, id: 1 });
+        const filter = downloadData.filter(
+          (item) => item.song_id === data.song_data.video_id
+        );
+        filter.map((item) => {
+          handleAudio({
+            video_id: item.song_id,
+            id: item.id,
+            author_name: item.author_name,
+            title: item.song_title,
+          });
+        });
+      } else {
+        show();
+        const filter = downloadData.filter(
+          (item) => item.song_id === data.video_id
+        );
+        filter.map((item) => {
+          handleAudio({
+            video_id: item.song_id,
+            id: item.id,
+            author_name: item.author_name,
+            title: item.song_title,
+          });
+        });
       }
     });
   }

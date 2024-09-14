@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Footer from "./Footer";
 
 function NavbarItem() {
-  const [expand, setExpand] = useState(true);
+  const [expand, setExpand] = useState(false);
   const navbarItem = [
     { id: 1, icon: "book", link: "/", label: "Library" },
     { id: 2, icon: "info", link: "/about", label: "About" },
@@ -102,7 +102,7 @@ function NavbarItem() {
                         animate={
                           expand
                             ? { opacity: 1 }
-                            : { opacity: 0, fontSize: "8px" }
+                            : { opacity: 0, fontSize: "0px" }
                         }
                         className="d-flex h5 m-0 w-100 "
                       >{`${item.label}`}</motion.div>
@@ -114,8 +114,8 @@ function NavbarItem() {
           </motion.div>
         </motion.div>
 
-        <motion.div animate={expand ? { opacity: 1 } : { opacity: 0 }}>
-          <Footer />
+        <motion.div animate={expand ? { opacity: 1 } : { opacity: 1 }}>
+          <Footer expand={expand} />
         </motion.div>
       </motion.div>
     </>

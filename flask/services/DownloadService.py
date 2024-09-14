@@ -54,18 +54,18 @@ def GetDownloadAudio(video_id):
         return None
 
 
-def CheckDownload(id):
+def CheckDownload(song_id):
     db = db_connection()
     cur = db.cursor()
     try:
-        sql = f"SELECT song_id FROM songs WHERE id = ?"
-        params = (id,)
+        sql = f"SELECT song_id FROM songs WHERE song_id = ?"
+        params = (song_id,)
         cur.execute(sql, params)
         song = cur.fetchall()
         print(len(song))
-        if len(song) >= 0:
+        if len(song) == 0:
             return True
-        return True
+        return False
     except Exception as e:
         print(e)
 

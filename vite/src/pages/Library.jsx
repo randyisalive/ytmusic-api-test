@@ -42,21 +42,9 @@ function Library() {
             className="d-flex gap-2 flex-column h-100"
             style={{ justifyContent: "space-between" }}
           >
-            <div className="d-flex">
+            <div className="d-flex flex-column">
               <span>{playlistData.trackCount} Tracks</span>
               <span>{playlistData.duration}</span>
-            </div>
-            <div className="d-flex gap-2">
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  open_folder().then((data) => {
-                    console.log(data);
-                  });
-                }}
-              >
-                Open Download Folder
-              </button>
             </div>
           </div>
         </div>

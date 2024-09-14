@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
-function Footer() {
+function Footer({ expand }) {
   const footerData = [
     {
       icon: "github",
@@ -24,6 +25,7 @@ function Footer() {
             <>
               <Link
                 className="text-white navbar-container-text"
+                style={{ width: "fit-content" }}
                 to={`${item.link}`}
               >
                 <div
@@ -34,7 +36,13 @@ function Footer() {
                     className={`pi pi-${item.icon}`}
                     style={{ fontSize: "1.2rem" }}
                   ></i>
-                  <span style={{ fontSize: "1.2rem" }}>{item.label}</span>
+                  <motion.span
+                    animate={
+                      expand ? { fontSize: "1.2rem" } : { fontSize: "0" }
+                    }
+                  >
+                    {item.label}
+                  </motion.span>
                 </div>
               </Link>
             </>

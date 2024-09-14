@@ -1,5 +1,3 @@
-import { useEffect, useMemo } from "react";
-import { motion } from "framer-motion";
 import usePlayerData from "./function/usePlayerData";
 import { AudioContext } from "./context/AudioContext";
 import "react-h5-audio-player/lib/styles.css";

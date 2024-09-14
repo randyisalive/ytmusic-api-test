@@ -14,9 +14,15 @@ function usePlayerData() {
   });
 
   const handleAudio = (params) => {
-    const { video_id, id } = params;
+    const { video_id, id, title, author_name } = params;
     fetchAudio(video_id).then((data) => {
-      setAudio({ audio: data, video_id: video_id, id: id });
+      setAudio({
+        audio: data,
+        video_id: video_id,
+        id: id,
+        title: title,
+        author_name: author_name,
+      });
     });
   };
 

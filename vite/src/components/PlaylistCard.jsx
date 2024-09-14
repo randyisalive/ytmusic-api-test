@@ -13,7 +13,14 @@ function PlaylistCard({
       {download_page ? (
         <div
           className="library-card"
-          onClick={() => handleAudio({ video_id: item.song_id, id: item.id })}
+          onClick={() =>
+            handleAudio({
+              video_id: item.song_id,
+              id: item.id,
+              title: item.song_title,
+              author_name: item.author_name,
+            })
+          }
         >
           <div
             className="w-100 d-flex"
