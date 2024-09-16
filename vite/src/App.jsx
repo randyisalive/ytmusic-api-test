@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { AudioTemplate } from "./AudioTemplate";
 import Player from "./Player";
+import Search from "./pages/Search";
 const Loading = lazy(() => import("./pages/Loading"));
 const Home = lazy(() => import("./pages/Home"));
 const Navbar = lazy(() => import("./components/Navbar"));
@@ -19,7 +20,9 @@ function App() {
         <Navbar channelId={channelId}>
           <Suspense fallback={<Loading />}>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home />}>
+                <Route path="/browse/s/:search" element={<Search />} />
+              </Route>
               <Route path="/download" element={<Download />} />
               <Route path="/about" element={<About />} />
               <Route path="/browse/:playlist_id" element={<Library />} />

@@ -12,7 +12,23 @@ function api() {
       }
     }
 
-    return { getAllPlaylist };
+    async function getSearch(search) {
+      try {
+        const response = await fetch(base_url + "/api/get_search_suggestions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ search }),
+        });
+        const data = await response.json();
+        return data;
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    return { getAllPlaylist, getSearch };
   }
 
   function DownloadApi() {

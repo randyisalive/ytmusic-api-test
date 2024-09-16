@@ -4,3 +4,7 @@
 body {
     overflow: hidden;
 }
+
+#search-bar::placeholder {
+    color: rgb(198, 198, 198);
+}

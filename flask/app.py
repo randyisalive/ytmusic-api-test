@@ -43,8 +43,9 @@ def get_library_playlists():
 @app.route("/api/get_search_suggestions", methods=["POST", "GET"])
 def get_search():
     data = request.get_json()
-    browseId = data.get("browseId")
-    suggestions = yt.get_song_related(browseId=browseId)
+    search = data.get("search")
+    print(search)
+    suggestions = yt.search(search)
     return jsonify(suggestions)
 
 
