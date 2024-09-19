@@ -1,13 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-function HomeSearchBar({ handleForm, get_search }) {
+function HomeSearchBar({ handleForm, get_search, form }) {
   return (
     <>
       <input
         type="text"
         id="search-bar"
         name="search"
+        value={form?.search}
         onChange={(e) => handleForm(e)}
         className="form-control text-white"
         placeholder="search song..."

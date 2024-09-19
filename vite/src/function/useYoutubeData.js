@@ -44,6 +44,7 @@ function useYoutubeData() {
       nav(`/browse/s/${form.search}`);
       setPlaylist([]);
       setSearch(data);
+      setForm({ search: "" });
     });
   }
 
