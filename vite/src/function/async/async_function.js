@@ -48,14 +48,14 @@ export async function getUser(channelId) {
   }
 }
 
-export async function downloadSong(url) {
+export async function downloadSong(video_id) {
   try {
     const response = await fetch(base_url + "/api/download", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ url }),
+      body: JSON.stringify({ video_id }),
     });
     const data = await response.json();
     return data;

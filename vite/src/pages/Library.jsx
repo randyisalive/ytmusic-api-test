@@ -1,14 +1,15 @@
 import useLibraryData from "../function/useLibraryData";
 import Loading from "./Loading";
+import usePlayerData from "./../function/usePlayerData";
 import { Toast } from "primereact/toast";
 import LibraryList from "../components/LibraryList";
-import { open_folder } from "../function/async/async_function";
 import "./css/library.css";
-import { useContext } from "react";
 
 function Library() {
   const { playlistData, isLoading, download_song, toast, toastDownload } =
     useLibraryData();
+
+  const { handleAudio } = usePlayerData();
 
   if (isLoading) {
     return (
@@ -34,7 +35,7 @@ function Library() {
             <span>{playlistData.privacy}</span>
             <span>
               {window.location.pathname === "/browse/LM"
-                ? playlistData.author.name
+                ? playlistData.author?.name
                 : null}
             </span>
           </div>
@@ -53,6 +54,7 @@ function Library() {
         <LibraryList
           download_song={download_song}
           playlistData={playlistData}
+          handleAudio={handleAudio}
         />
       </div>
     </div>

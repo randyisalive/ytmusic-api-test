@@ -12,7 +12,7 @@ function Download() {
 
   return (
     <>
-      <motion.div>
+      <motion.div className="container">
         <Link
           to={`/download`}
           className="d-flex"

@@ -5,27 +5,32 @@ import PlaylistCard from "../components/PlaylistCard";
 import LabelDisplay from "../components/LabelDisplay";
 import HomeSearchBar from "../components/Home/HomeSearchBar";
 import { Outlet } from "react-router-dom";
+import usePlayerData from "../function/usePlayerData";
+import { useContext } from "react";
+import { useMyContext } from "../AudioTemplate";
 
 function Home() {
   const { playlist, isLoading, handleForm, get_search, searchData, form } =
     useYoutubeData();
 
+  const { handleAudio } = useMyContext();
+
   return (
     <>
-      <div className="d-flex">
+      <div className="d-flex container">
         <LabelDisplay label={`Library`} />
       </div>
-      <div className="mt-3 d-flex w-50 align-items-center gap-3">
+      <div className="mt-3 container d-flex  gap-3">
         <HomeSearchBar
           form={form}
           handleForm={handleForm}
           get_search={get_search}
+          inputParams={{ form, placeholder: "Filter Songs" }}
         />
       </div>
 
-      {isLoading ? <Loading /> : null}
       <div
-        className="d-flex mt-5 mb-5 gap-3 flex-column "
+        className="d-flex mt-5 mb-5 gap-3 flex-column container"
         style={{ flexWrap: "wrap" }}
       >
         {playlist ? (
@@ -43,7 +48,7 @@ function Home() {
             </div>
           </>
         )}
-        <Outlet context={{ searchData }} />
+        {searchData ? <Outlet context={{ searchData, handleAudio }} /> : null}
       </div>
     </>
   );

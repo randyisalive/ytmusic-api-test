@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Download from "../pages/Download";
 import api from "./api";
 
 function usePlayerData() {
@@ -14,15 +13,23 @@ function usePlayerData() {
   });
 
   const handleAudio = (params) => {
-    const { video_id, id, title, author_name } = params;
-    fetchAudio(video_id).then((data) => {
-      setAudio({
-        audio: data,
-        video_id: video_id,
-        id: id,
-        title: title,
-        author_name: author_name,
+    const { video_id, id, title, author_name, audio_data } = params;
+    if (id) {
+      fetchAudio(video_id).then((data) => {
+        setAudio({
+          audio: data,
+          video_id: video_id,
+          id: id,
+          title: title,
+          author_name: author_name,
+        });
       });
+    }
+    setAudio({
+      audio: audio_data,
+      video_id: video_id,
+      title: title,
+      author_name: author_name,
     });
   };
 

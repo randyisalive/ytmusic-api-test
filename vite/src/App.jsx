@@ -2,7 +2,6 @@ import React, { memo, useContext, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { AudioTemplate } from "./AudioTemplate";
-import Player from "./Player";
 import Search from "./pages/Search";
 const Loading = lazy(() => import("./pages/Loading"));
 const Home = lazy(() => import("./pages/Home"));
@@ -15,8 +14,8 @@ function App() {
   const channelId = "UCm1Ta_ebXboWHcZBBvXYmwg";
 
   return (
-    <Router>
-      <AudioTemplate>
+    <AudioTemplate>
+      <Router>
         <Navbar channelId={channelId}>
           <Suspense fallback={<Loading />}>
             <Routes>
@@ -29,8 +28,8 @@ function App() {
             </Routes>
           </Suspense>
         </Navbar>
-      </AudioTemplate>
-    </Router>
+      </Router>
+    </AudioTemplate>
   );
 }
 

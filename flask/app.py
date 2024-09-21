@@ -1,19 +1,17 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
-import io
 import os
-from pytubefix import YouTube
 from dotenv import load_dotenv
 
 
 # services
 from services.DownloadService import InsertDownload, CheckDownload, GetDownloadAudio
-from services.MoviepyServices import ConvertToMp3
 from yt import yt
 
 # controller
 from controller.SystemController import SystemController
 from controller.DownloadController import DownloadController
+from controller.YouTubeController import YouTubeController
 
 
 app = Flask(__name__)
@@ -44,7 +42,6 @@ def get_library_playlists():
 def get_search():
     data = request.get_json()
     search = data.get("search")
-    print(search)
     suggestions = yt.search(search)
     return jsonify(suggestions)
 
@@ -54,9 +51,7 @@ def get_playlist_by_id():
     if request.method == "POST":
         data = request.get_json()
         id = data.get("id")
-        print(id)
         playlist = yt.get_playlist(id, 1, related=True)
-        print(playlist)
         return jsonify(playlist)
     return jsonify({"message": "hello"})
 
@@ -71,51 +66,9 @@ def get_user():
     return jsonify({"message": "hello"})
 
 
-@app.route("/api/download", methods=["POST", "GET"])
-def download_url():
-    if request.method == "POST":
-        url = request.get_json().get("url")
-        buffer = io.BytesIO()
-        try:
-            yt = YouTube(url)
-            stream = yt.streams.get_audio_only()
-            print(stream)
-            video_id = yt.video_id
-            if not CheckDownload(video_id):
-                return jsonify({"message": False, "video_id": video_id})
-            stream.stream_to_buffer(buffer)
-            buffer.seek(0)
-            audio_data = buffer.read()
-            author_name = yt.author
-            author_id = yt.channel_id
-            InsertDownload(
-                yt.thumbnail_url,
-                video_id,
-                yt.title,
-                author_id,
-                author_name,
-                audio_data,
-            )
-
-            return jsonify(
-                {
-                    "message": True,
-                    "song_data": {"song_title": yt.title, "author_name": author_name},
-                }
-            )
-        except Exception as e:
-            print(e)
-            return jsonify(
-                {
-                    "message": False,
-                    "song_data": {"title": yt.title, "video_id": video_id},
-                }
-            )
-    return jsonify("index.html")  # Create an HTML template for the form
-
-
 app.register_blueprint(SystemController)
 app.register_blueprint(DownloadController)
+app.register_blueprint(YouTubeController)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")

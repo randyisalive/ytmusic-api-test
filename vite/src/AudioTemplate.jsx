@@ -2,6 +2,7 @@ import usePlayerData from "./function/usePlayerData";
 import { AudioContext } from "./context/AudioContext";
 import "react-h5-audio-player/lib/styles.css";
 import Player from "./Player";
+import { useContext } from "react";
 
 export function AudioTemplate({ children }) {
   const { audio, handleAudio, playerState, handlePlayerState } =
@@ -20,3 +21,5 @@ export function AudioTemplate({ children }) {
     </AudioContext.Provider>
   );
 }
+
+export const useMyContext = () => useContext(AudioContext);

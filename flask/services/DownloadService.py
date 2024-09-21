@@ -8,10 +8,11 @@ def GetDownload():
     cur = db.cursor()
     try:
         table_name = "songs"
-        sql = (
-            "SELECT id, img, song_id, song_title, author_id, author_name FROM "
-            + table_name
-        )
+        sql = f"""
+                SELECT id, img, song_id, song_title, author_id, author_name 
+                FROM {table_name}
+                ORDER BY id DESC
+            """
         cur.execute(sql)
         songs = cur.fetchall()
         songs_list = [

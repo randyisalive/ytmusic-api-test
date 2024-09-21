@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import api from "./api";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import usePlayerData from "./usePlayerData";
 
 function useYoutubeData() {
   const { Home } = api();
   const { getAllPlaylist, getSearch } = Home();
+  const { playlist_id } = useParams();
   const nav = useNavigate();
   const location = useLocation();
+
+  const { handleAudio } = usePlayerData();
 
   const [isLoading, setIsLoading] = useState(true);
   const [playlist, setPlaylist] = useState([]);
   const [search, setSearch] = useState([]);
   const [form, setForm] = useState(null);
   const [refresh, setRefresh] = useState(false);
+
+  const searchUrl = decodeURIComponent(location.pathname.split("/").pop());
 
   useEffect(() => {
     if (location.pathname == "/") {
@@ -31,8 +37,17 @@ function useYoutubeData() {
     console.log("Saerch Data: ", search);
   }, [form, playlist, location, search]);
 
+  useEffect(() => {
+    if (searchUrl) {
+      getSearch(searchUrl).then((data) => {
+        setPlaylist([]);
+        setSearch(data);
+      });
+    }
+  }, [searchUrl]);
+
   function handleForm(e) {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setForm(e.target.value);
   }
 
   function handleRefresh() {
@@ -40,11 +55,11 @@ function useYoutubeData() {
   }
 
   function get_search() {
-    getSearch(form.search).then((data) => {
-      nav(`/browse/s/${form.search}`);
+    nav(`/browse/s/${form}`);
+    getSearch(form).then((data) => {
       setPlaylist([]);
       setSearch(data);
-      setForm({ search: "" });
+      setForm("");
     });
   }
 

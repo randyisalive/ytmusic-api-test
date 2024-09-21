@@ -1,39 +1,26 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { downloadSong, getPlaylist } from "./async/async_function";
-import { AudioContext } from "../context/AudioContext";
-import useDownloadData from "./useDownloadData";
+import { useMyContext } from "../AudioTemplate";
+import api from "./api";
+import { Buffer } from "buffer";
+import { base64ToBlob } from "./utils/base64ToBlob";
 
 function useLibraryData() {
   const { playlist_id } = useParams();
+  const { DownloadApi } = api();
+  const { GetDownload } = DownloadApi();
   const [playlistData, setPlaylistData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { handleAudio } = useContext(AudioContext);
-
-  const { downloadData } = useDownloadData();
-  console.log(downloadData);
+  const { handleAudio } = useMyContext();
 
   const toast = useRef(null);
-  const toastDownload = useRef(null);
 
-  const show = () => {
-    toastDownload.current.show({
-      severity: "success",
-      summary: "Info",
-      detail: "Song Downloaded!!",
-    });
-  };
-
-  const toastOff = (key) => {
-    toast.current.clear(key);
-  };
-
-  const showDownload = () => {
+  const show = (severity, summary, detail) => {
     toast.current.show({
-      severity: "primary",
-      summary: "Info",
-      detail: "Downloading...",
-      key: "downloadToast",
+      severity: severity,
+      summary: summary,
+      detail: detail,
     });
   };
 
@@ -55,40 +42,39 @@ function useLibraryData() {
     }
   }, [playlistData]);
 
-  function download_song(url) {
-    downloadSong(url).then((data) => {
-      console.log(data.message);
-      if (data.message === true) {
-        show();
-        const filter = downloadData.filter(
-          (item) => item.song_id === data.song_data.video_id
-        );
-        filter.map((item) => {
+  function download_song(video_id) {
+    show("info", "Info", "Downloading...");
+    downloadSong(video_id).then((data) => {
+      console.log(data);
+      show("success", "Info", "Song Downloaded!!");
+      handleAudio({
+        audio_data: URL.createObjectURL(
+          base64ToBlob(data.song_data.audio_data, "audio/mp4")
+        ),
+        video_id: data.song_data.video_id,
+        author_name: data.song_data.author_name,
+        title: data.song_data.song_title,
+      });
+
+      /* const songId =
+        data.message === true ? data.song_data.video_id : data.video_id;
+      GetDownload().then((download) => {
+        const filter = download.filter((item) => item.song_id === songId);
+        console.log("Filter", filter);
+
+        filter.forEach((item) => {
           handleAudio({
-            video_id: item.song_id,
+            video_id: item.song_id ? item.song_id : item.video_id,
             id: item.id,
             author_name: item.author_name,
             title: item.song_title,
           });
         });
-      } else {
-        show();
-        const filter = downloadData.filter(
-          (item) => item.song_id === data.video_id
-        );
-        filter.map((item) => {
-          handleAudio({
-            video_id: item.song_id,
-            id: item.id,
-            author_name: item.author_name,
-            title: item.song_title,
-          });
-        });
-      }
+      }); */
     });
   }
 
-  return { playlistData, isLoading, download_song, toast, toastDownload };
+  return { playlistData, isLoading, download_song, toast };
 }
 
 export default useLibraryData;

@@ -1,9 +1,6 @@
 import { memo, useEffect, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
-import ReactPlayer from "react-player/lazy";
-
 import { motion } from "framer-motion";
-import VideoPlayer from "./Player/VideoPlayer";
 
 function Player({ audio, playerState, handlePlayerState }) {
   const variants = {
