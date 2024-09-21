@@ -1,3 +1,30 @@
 body {
     overflow-y: hidden;
 }
+
+.custom-context-menu {
+    background-color: #8F0F32; /* Bright red background */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 1rem; /* Slightly darker red border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  }
+  
+  .custom-context-menu-item {
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-context-menu-item:hover {
+    background-color: #e60000; /* Darker red for hover effect */
+  }
+  
+  .custom-context-menu-item:active {
+    background-color: #cc0000; /* Even darker red for active state */
+  }
+  
+  .custom-context-menu-divider {
+    border-top: 1px solid #cc0000;
+    margin: 5px 0;
+  }
+  

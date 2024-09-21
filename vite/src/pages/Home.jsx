@@ -5,8 +5,6 @@ import PlaylistCard from "../components/PlaylistCard";
 import LabelDisplay from "../components/LabelDisplay";
 import HomeSearchBar from "../components/Home/HomeSearchBar";
 import { Outlet } from "react-router-dom";
-import usePlayerData from "../function/usePlayerData";
-import { useContext } from "react";
 import { useMyContext } from "../AudioTemplate";
 
 function Home() {
@@ -25,7 +23,7 @@ function Home() {
           form={form}
           handleForm={handleForm}
           get_search={get_search}
-          inputParams={{ form, placeholder: "Filter Songs" }}
+          inputParams={{ form, placeholder: "Search Songs 🤗" }}
         />
       </div>
 

@@ -1,8 +1,9 @@
-import React, { memo, useContext, useMemo } from "react";
+import React, { memo, useContext, useMemo, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { AudioTemplate } from "./AudioTemplate";
 import Search from "./pages/Search";
+import { ContextMenu } from "primereact/contextmenu";
 const Loading = lazy(() => import("./pages/Loading"));
 const Home = lazy(() => import("./pages/Home"));
 const Navbar = lazy(() => import("./components/Navbar"));
@@ -12,9 +13,29 @@ const About = lazy(() => import("./pages/About"));
 
 function App() {
   const channelId = "UCm1Ta_ebXboWHcZBBvXYmwg";
+  const cm = useRef(null);
+  const items = [
+    { label: "Copy", icon: "pi pi-copy" },
+    { label: "Rename", icon: "pi pi-file-edit" },
+  ];
 
   return (
     <AudioTemplate>
+      <ContextMenu
+        global
+        model={items}
+        ref={cm}
+        unstyled
+        breakpoint="767px"
+        pt={{
+          root: { className: "custom-context-menu" },
+          menu: {
+            className: "d-flex flex-column",
+          },
+          menuitem: { className: "custom-context-menu-item" },
+          separator: { className: "custom-context-menu-divider" },
+        }}
+      />
       <Router>
         <Navbar channelId={channelId}>
           <Suspense fallback={<Loading />}>

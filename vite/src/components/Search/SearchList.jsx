@@ -14,6 +14,7 @@ function SearchList({
   imgSize,
 }) {
   const { navbarCardVariant } = SearchVariants();
+  const { handleAudio } = useMyContext();
   const { download_song, toast } = useLibraryData();
 
   return (
