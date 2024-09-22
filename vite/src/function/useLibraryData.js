@@ -1,15 +1,11 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { downloadSong, getPlaylist } from "./async/async_function";
 import { useMyContext } from "../AudioTemplate";
-import api from "./api";
-import { Buffer } from "buffer";
 import { base64ToBlob } from "./utils/base64ToBlob";
 
 function useLibraryData() {
   const { playlist_id } = useParams();
-  const { DownloadApi } = api();
-  const { GetDownload } = DownloadApi();
   const [playlistData, setPlaylistData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { handleAudio } = useMyContext();
